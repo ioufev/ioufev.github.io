@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="oracle 使用 API 脚本创建实例">
+<meta name="keywords" content="计算机协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle API脚本创建实例">
+<meta property="og:url" content="https://ioufev.com/2019/12/23/oracle-api-jiao-ben-chuang-jian-shi-li/index.html">
+<meta property="og:site_name" content="云逸">
+<meta property="og:description" content="oracle 使用 API 脚本创建实例">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/vqbohicGrmZDkVd.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/F9vfWkKpZTUeh82.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/Cjsl4HiRb86ZucL.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/ErpjJytUoPW5l61.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/iNnUQtLEhMvB1al.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/8CuEntSXd4Lc3b6.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/XIetzwGKJTWBdnf.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/aSy2K4h8VLPHQuZ.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/Ps8L4JmX5SRV7hk.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/6QWdMmXqfKnIlwo.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/23/aCU9RxfzyXKchEV.png">
+<meta property="og:updated_time" content="2019-12-23T11:43:18.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="oracle API脚本创建实例">
+<meta name="twitter:description" content="oracle 使用 API 脚本创建实例">
+<meta name="twitter:image" content="https://i.loli.net/2019/10/23/vqbohicGrmZDkVd.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ioufev.com/2019/12/23/oracle-api-jiao-ben-chuang-jian-shi-li/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>oracle API脚本创建实例 | 云逸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云逸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ioufev.com/2019/12/23/oracle-api-jiao-ben-chuang-jian-shi-li/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云逸">
+      <meta itemprop="description" content="记录生活">
+      <meta itemprop="image" content="/images/heart.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云逸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">oracle API脚本创建实例
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-23 19:43:18" itemprop="dateCreated datePublished" datetime="2019-12-23T19:43:18+08:00">2019-12-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>oracle 使用 API 脚本创建实例</p>
+<a id="more"></a>
+<blockquote>
+<ul>
+<li>参考：<a href="https://www.bobobk.com/612.html" target="_blank" rel="noopener">https://www.bobobk.com/612.html</a></li>
+<li>机器：准备一台机器，我用的腾讯云的centos7.6</li>
+<li>Shell工具：<a href="http://www.hostbuf.com/t/988.html" target="_blank" rel="noopener">FinalShell</a></li>
+</ul>
+</blockquote>
+<h3 id="FinalShell"><a href="#FinalShell" class="headerlink" title="FinalShell"></a>FinalShell</h3><p><img src="https://i.loli.net/2019/10/23/vqbohicGrmZDkVd.png" alt="image.png"></p>
+<p>鼠标选中内容后</p>
+<p>第一个图标：只复制</p>
+<p>第二个图标：复制并且粘贴</p>
+<h3 id="安装oci-cli"><a href="#安装oci-cli" class="headerlink" title="安装oci-cli"></a>安装oci-cli</h3><blockquote>
+<p>参考：<a href="https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm" target="_blank" rel="noopener">https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm</a></p>
+</blockquote>
+<p><strong>安装oci-cli</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]# bash -c <span class="string">"<span class="variable">$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 一堆代码</span></span><br><span class="line"></span><br><span class="line">===&gt; Modify<span class="built_in"> profile </span><span class="keyword">to</span> update your <span class="variable">$PATH</span> <span class="keyword">and</span> <span class="builtin-name">enable</span> shell/tab completion now? (Y/n): y</span><br><span class="line"></span><br><span class="line"><span class="comment">## 一些提示</span></span><br><span class="line">-- ** <span class="builtin-name">Run</span> `exec -l <span class="variable">$SHELL</span>` <span class="keyword">to</span> restart your shell. **</span><br><span class="line">-- </span><br><span class="line">-- Installation successful.</span><br><span class="line">-- <span class="builtin-name">Run</span> the CLI with /root/bin/oci --help</span><br><span class="line"></span><br><span class="line"><span class="comment">## 按照提示使oci生效</span></span><br><span class="line">[root@VM_0_12_centos ~]# exec -l <span class="variable">$SHELL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看oci是否生效</span></span><br><span class="line">[root@VM_0_12_centos ~]# oci -v</span><br><span class="line">2.6.9</span><br></pre></td></tr></table></figure>
+<p><strong>oci-cli其他命令</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 升级oci-cli</span></span><br><span class="line">pip <span class="keyword">install</span> oci-cli <span class="comment">--upgrade</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 卸载oci-cli</span></span><br><span class="line">pip <span class="keyword">uninstall</span> oci-cli</span><br></pre></td></tr></table></figure>
+<h3 id="配置oci"><a href="#配置oci" class="headerlink" title="配置oci"></a>配置oci</h3><p><img src="https://i.loli.net/2019/10/23/F9vfWkKpZTUeh82.png" alt="用户和租户"></p>
+<p><img src="https://i.loli.net/2019/10/23/Cjsl4HiRb86ZucL.png" alt="用户OCID"></p>
+<ul>
+<li>获得用户OCID：ocid1.user.oc1..aaaaaaaajrz7kqwo2tz5esslpdxc75nkfs4cbfwccq5xqt6ql2oinkh32e4a</li>
+<li>获得租户OCID：ocid1.tenancy.oc1..aaaaaaaavb77g5bgee2venclnxhonn3zjvb6xafodnx7uuya3edwq6fgd46a</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]# oci setup config</span><br><span class="line"></span><br><span class="line"><span class="comment">## 一堆代码</span></span><br><span class="line">Enter a location <span class="keyword">for</span> your<span class="built_in"> config </span>[/root/.oci/config]: </span><br><span class="line"></span><br><span class="line"><span class="comment">## 输入用户ID</span></span><br><span class="line">Enter a<span class="built_in"> user </span>OCID: ocid1.user.oc1<span class="built_in">..</span>aaaaaaaajrz7kqwo2tz5esslpdxc75nkfs4cbfwccq5xqt6ql2oinkh32e4a</span><br><span class="line"></span><br><span class="line"><span class="comment">## 输入租户ID</span></span><br><span class="line">Enter a tenancy OCID: ocid1.tenancy.oc1<span class="built_in">..</span>aaaaaaaavb77g5bgee2venclnxhonn3zjvb6xafodnx7uuya3edwq6fgd46a</span><br><span class="line"></span><br><span class="line"><span class="comment">## 输入区域，自然是韩国</span></span><br><span class="line">Enter a region (e.g. ap-mumbai-1, ap-seoul-1, ap-sydney-1, ap-tokyo-1, ca-toronto-1, eu-frankfurt-1, eu-zurich-1, sa-saopaulo-1, uk-london-1, us-ashburn-1, us-gov-ashburn-1, us-gov-chicago-1, us-gov-phoenix-1, us-langley-1, us-luke-1, us-phoenix-1): ap-seoul-1</span><br><span class="line"></span><br><span class="line"><span class="comment">## 问是否生成密钥对，是，y</span></span><br><span class="line"><span class="keyword">Do</span> you want <span class="keyword">to</span> generate a new RSA key pair? (<span class="keyword">If</span> you decline you will be asked <span class="keyword">to</span> supply the path <span class="keyword">to</span> an existing key.) [Y/n]: y</span><br><span class="line">Enter a directory <span class="keyword">for</span> your keys <span class="keyword">to</span> be created [/root/.oci]: </span><br><span class="line">Enter a name <span class="keyword">for</span> your key [oci_api_key]: </span><br><span class="line"></span><br><span class="line"><span class="comment">## 公钥路径</span></span><br><span class="line">Public key written <span class="keyword">to</span>: /root/.oci/oci_api_key_public.pem</span><br><span class="line"></span><br><span class="line"><span class="comment">## 问是否设置私钥密码，当然不要，默认回车</span></span><br><span class="line">Enter a passphrase <span class="keyword">for</span> your private key (empty <span class="keyword">for</span> <span class="literal">no</span> passphrase): </span><br><span class="line"></span><br><span class="line"><span class="comment">## 私钥路径</span></span><br><span class="line">Private key written <span class="keyword">to</span>: /root/.oci/oci_api_key.pem</span><br><span class="line"></span><br><span class="line"><span class="comment">## 一堆代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看公钥</span></span><br><span class="line">[root@VM_0_12_centos ~]# more /root/.oci/oci_api_key_public.pem</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzXqJQA8yhFaL4AshcHRM</span><br><span class="line">cTRxore9suSn8gsM+N19AMx8rv1I538bPnMtZJgFKlyUwDlcpWbfVTwycJIPfwia</span><br><span class="line">hvpUlS+On9nsxrP6FfS7qtqdc9BleUHAL9qAQgHFrRkt2B4WESvrmIeNb08I6L74</span><br><span class="line">xggWQXFnU9N4LZh4hQIN+dk/Nso6Y8sGEqW4XmUNFtmUrHLSY/tmxBcOLEn2fMV8</span><br><span class="line">8KAR38h8TZD4qvGpqnIIaIf3Nip0+wv3km0KVlLs5rrWaZl142fZd/AvS0uY708n</span><br><span class="line">JuKS/Jizd8OcEstqOg0KJnfYQwRSJnZtoCWlDGgJ+WInk2Lr6zIr9FWdwNx5/uQv</span><br><span class="line">QwIDAQAB</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure>
+<p>用户界面：添加API密钥</p>
+<p><img src="https://i.loli.net/2019/10/23/ErpjJytUoPW5l61.png" alt="image.png"></p>
+<p>密钥内容就是前面的公钥字符串</p>
+<p><img src="https://i.loli.net/2019/10/23/iNnUQtLEhMvB1al.png" alt="image.png"></p>
+<h3 id="获取请求信息"><a href="#获取请求信息" class="headerlink" title="获取请求信息"></a>获取请求信息</h3><p><img src="https://i.loli.net/2019/10/23/8CuEntSXd4Lc3b6.png" alt="请求参数.PNG"></p>
+<p>复制json格式的字符串，找个代码美化在线工具。</p>
+<p>请求信息</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"compartmentId"</span>: <span class="string">"ocid1.tenancy.oc1..aaaaaaaavb77g5bgee2venclnxhonn3zjvb6xafodnx7uuya3edwq6fgd46a"</span>,</span><br><span class="line">    <span class="attr">"displayName"</span>: <span class="string">"instance-20191023-1024"</span>,</span><br><span class="line">    <span class="attr">"availabilityDomain"</span>: <span class="string">"shyQ:AP-SEOUL-1-AD-1"</span>,</span><br><span class="line">    <span class="attr">"sourceDetails"</span>: &#123;</span><br><span class="line">        <span class="attr">"sourceType"</span>: <span class="string">"image"</span>,</span><br><span class="line">        <span class="attr">"imageId"</span>: <span class="string">"ocid1.image.oc1.ap-seoul-1.aaaaaaaairwy3ids4ncccfatxvtwn57faqaajmb5oakqfcpkef665ek2zwpq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"shape"</span>: <span class="string">"VM.Standard.E2.1.Micro"</span>,</span><br><span class="line">    <span class="attr">"createVnicDetails"</span>: &#123;</span><br><span class="line">        <span class="attr">"subnetId"</span>: <span class="string">"ocid1.subnet.oc1.ap-seoul-1.aaaaaaaazd53sfej5mq6myipe75cshsonckjsskuvgn5pq7wth2wlziyslcq"</span>,</span><br><span class="line">        <span class="attr">"assignPublicIp"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"ssh_authorized_keys"</span>: <span class="string">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQBo6+aohp7uY3H3YUuYMhgty+0m1Tw/48T/UEMZ98nEr/CzRvNByoN/s0guyhjqqi72D1oXaS2XFZLralWodCDWg7zeWKr/Nyc7udM5wYdVFqSeANlbSv4mS2CG1DyLIST8P3lpTXlWIcJWPUskGxjdMFVurGIIgEKKPpYMggK7eTwKoW/B+stLcKORjNYDGIh6Ny3R0JhR+i5Iyi7fb1N7Cei6nEiIDGvPE3soZpHcwE6AmxcYuOINhhDKwXQfFlLFngBx+Glyp4WA/7M08Ur+Fetk2Xk2DcY+GUnzHThQbgN4x3W48xQvx7IhPGEB+Z+3N2s9U6ZCzr+iyn0XauXx rsa-key-20190918"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"agentConfig"</span>: &#123;</span><br><span class="line">        <span class="attr">"isMonitoringDisabled"</span>: <span class="literal">false</span>,</span><br><span class="line">        <span class="attr">"isManagementDisabled"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"definedTags"</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">"freeformTags"</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对照信息，填写参数</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">oci compute<span class="built_in"> instance </span>launch</span><br><span class="line">--availability-domain shyQ:AP-SEOUL-1-AD-1</span><br><span class="line">--display-name instance-20191023-1024</span><br><span class="line">--image-id ocid1.image.oc1.ap-seoul-1.aaaaaaaairwy3ids4ncccfatxvtwn57faqaajmb5oakqfcpkef665ek2zwpq</span><br><span class="line">--subnet-id ocid1.subnet.oc1.ap-seoul-1.aaaaaaaazd53sfej5mq6myipe75cshsonckjsskuvgn5pq7wth2wlziyslcq</span><br><span class="line">--shape VM.Standard.E2.1.Micro</span><br><span class="line">--assign-public-ip true</span><br><span class="line">--metadata '&#123;<span class="string">"ssh_authorized_keys"</span>: <span class="string">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQBo6+aohp7uY3H3YUuYMhgty+0m1Tw/48T/UEMZ98nEr/CzRvNByoN/s0guyhjqqi72D1oXaS2XFZLralWodCDWg7zeWKr/Nyc7udM5wYdVFqSeANlbSv4mS2CG1DyLIST8P3lpTXlWIcJWPUskGxjdMFVurGIIgEKKPpYMggK7eTwKoW/B+stLcKORjNYDGIh6Ny3R0JhR+i5Iyi7fb1N7Cei6nEiIDGvPE3soZpHcwE6AmxcYuOINhhDKwXQfFlLFngBx+Glyp4WA/7M08Ur+Fetk2Xk2DcY+GUnzHThQbgN4x3W48xQvx7IhPGEB+Z+3N2s9U6ZCzr+iyn0XauXx rsa-key-20190918"</span>&#125;'</span><br><span class="line">--compartment-id ocid1.tenancy.oc1..aaaaaaaavb77g5bgee2venclnxhonn3zjvb6xafodnx7uuya3edwq6fgd46a</span><br></pre></td></tr></table></figure>
+<p>去掉回车，变成一条命令</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oci compute<span class="built_in"> instance </span>launch --availability-domain shyQ:AP-SEOUL-1-AD-1 --display-name<span class="built_in"> instance-20191024-1024 </span>--image-id ocid1.image.oc1.ap-seoul-1.aaaaaaaairwy3ids4ncccfatxvtwn57faqaajmb5oakqfcpkef665ek2zwpq --subnet-id ocid1.subnet.oc1.ap-seoul-1.aaaaaaaazd53sfej5mq6myipe75cshsonckjsskuvgn5pq7wth2wlziyslcq --shape VM.Standard.E2.1.Micro --assign-public-ip true --metadata '&#123;<span class="string">"ssh_authorized_keys"</span>: <span class="string">"ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQBo6+aohp7uY3H3YUuYMhgty+0m1Tw/48T/UEMZ98nEr/CzRvNByoN/s0guyhjqqi72D1oXaS2XFZLralWodCDWg7zeWKr/Nyc7udM5wYdVFqSeANlbSv4mS2CG1DyLIST8P3lpTXlWIcJWPUskGxjdMFVurGIIgEKKPpYMggK7eTwKoW/B+stLcKORjNYDGIh6Ny3R0JhR+i5Iyi7fb1N7Cei6nEiIDGvPE3soZpHcwE6AmxcYuOINhhDKwXQfFlLFngBx+Glyp4WA/7M08Ur+Fetk2Xk2DcY+GUnzHThQbgN4x3W48xQvx7IhPGEB+Z+3N2s9U6ZCzr+iyn0XauXx rsa-key-20190918"</span>&#125;' --compartment-id ocid1.tenancy.oc1..aaaaaaaavb77g5bgee2venclnxhonn3zjvb6xafodnx7uuya3edwq6fgd46a</span><br></pre></td></tr></table></figure>
+<p>复制运行这条命令，如果一会儿有输出的话那么就没问题了，接下来就可以定时执行命令创建云服务器了。</p>
+<p><img src="https://i.loli.net/2019/10/23/XIetzwGKJTWBdnf.png" alt="image.png"></p>
+<h3 id="创建脚本"><a href="#创建脚本" class="headerlink" title="创建脚本"></a>创建脚本</h3><p>确认oci-cli是否安装好</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]<span class="comment"># find / -name oci_autocomplete.sh</span></span><br><span class="line">/root/<span class="class"><span class="keyword">lib</span>/<span class="title">oracle</span>-<span class="title">cli</span>/<span class="title">lib</span>/<span class="title">python2</span>.7/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">oci_cli</span>/<span class="title">bin</span>/<span class="title">oci_autocomplete</span>.<span class="title">sh</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>新建文件</strong></p>
+<p>在<code>/root</code>下创建名为<code>oci.sh</code>的脚本文件</p>
+<p>使用FinalShell新建文件</p>
+<p><img src="https://i.loli.net/2019/10/23/aSy2K4h8VLPHQuZ.png" alt="image.png"></p>
+<p>或者使用命令行</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch <span class="regexp">/root/</span>oci.sh</span><br></pre></td></tr></table></figure>
+<p><strong>编辑文件</strong></p>
+<p>使用FinalShell编辑文件，双击<code>oci.sh</code>文件</p>
+<p><img src="https://i.loli.net/2019/10/23/Ps8L4JmX5SRV7hk.png" alt="编辑文件"></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vi /root/oci.sh</span><br><span class="line"></span><br><span class="line"><span class="comment">## 键盘输入：i</span></span><br><span class="line"><span class="comment">## 粘贴代码</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">NVM_DIR</span>=<span class="string">"<span class="variable">$HOME</span>/.nvm"</span></span><br><span class="line">[ -s <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> ] &amp;&amp; \. <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span>  # This loads nvm</span><br><span class="line">[ -s <span class="string">"<span class="variable">$NVM_DIR</span>/bash_completion"</span> ] &amp;&amp; \. <span class="string">"<span class="variable">$NVM_DIR</span>/bash_completion"</span>  # This loads nvm bash_completion</span><br><span class="line">alias <span class="attribute">ic</span>=<span class="string">"ibmcloud"</span></span><br><span class="line"></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=/root/bin:$PATH</span><br><span class="line"></span><br><span class="line">[[ -e <span class="string">"/root/lib/oracle-cli/lib/python2.7/site-packages/oci_cli/bin/oci_autocomplete.sh"</span> ]] &amp;&amp; source <span class="string">"/root/lib/oracle-cli/lib/python2.7/site-packages/oci_cli/bin/oci_autocomplete.sh"</span></span><br><span class="line"><span class="comment">#如果你们的bash环境下直接下面这句没报错，只用这一句也是ok的</span></span><br><span class="line"><span class="comment">#上面这些主要是加入你们默认shell的内容，防止出现跟系统环境有关的错误，可改为source /root/.bashrc,这里.bashrc为你们的默认shell</span></span><br><span class="line">oci compute<span class="built_in"> instance </span>launch <span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"><span class="comment">## 保存退出：Esc--&gt;:wq</span></span><br></pre></td></tr></table></figure>
+<h3 id="定时执行脚本"><a href="#定时执行脚本" class="headerlink" title="定时执行脚本"></a>定时执行脚本</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">crontab -e</span><br><span class="line">## 键盘输入：i</span><br><span class="line">## 粘贴代码，代码设置为<span class="number">2</span>分钟执行一次</span><br><span class="line">*/<span class="number">2</span> * * * *  /bin/bash /root/oci.sh  &gt;&gt; /root/oracle.log   <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">## 保存退出：Esc--&gt;:wq</span><br></pre></td></tr></table></figure>
+<p>查看运行的定时命令</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]<span class="meta"># crontab -l</span></span><br><span class="line">*/<span class="number">2</span> * * * *  <span class="meta-keyword">/bin/</span>bash <span class="meta-keyword">/root/</span>oci.sh  &gt;&gt; <span class="meta-keyword">/root/</span>oracle.log   <span class="number">2</span>&gt;<span class="variable">&amp;1</span></span><br><span class="line">*/<span class="number">1</span> * * * * <span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/qcloud/</span>stargate<span class="meta-keyword">/admin/</span>start.sh &gt; <span class="meta-keyword">/dev/</span>null <span class="number">2</span>&gt;<span class="variable">&amp;1</span> &amp;</span><br><span class="line"><span class="number">0</span> <span class="number">0</span> * * * <span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/qcloud/</span>YunJing/YDCrontab.sh &gt; <span class="meta-keyword">/dev/</span>null <span class="number">2</span>&gt;<span class="variable">&amp;1</span> &amp;</span><br></pre></td></tr></table></figure>
+<p>要实时显示刷的信息，可以使用下面命令查看</p>
+<blockquote>
+<p>tail 命令可用于查看文件的内容，有一个常用的参数 -f 常用于查阅正在改变的日志文件。</p>
+<p><code>tail -f filename</code> 会把 filename 文件里的最尾部的内容显示在屏幕上，并且不断刷新，只要 filename 更新就可以看到最新的文件内容。</p>
+</blockquote>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -F /root/oracle.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>显然直接查看<code>oracle.log</code>更直接</p>
+<p><img src="https://i.loli.net/2019/10/23/6QWdMmXqfKnIlwo.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2019/10/23/aCU9RxfzyXKchEV.png" alt="image.png"></p>
+<h3 id="疑问与体验"><a href="#疑问与体验" class="headerlink" title="疑问与体验"></a>疑问与体验</h3><ol>
+<li>参数中实例名字会不会创建两个一样的？</li>
+</ol>
+<p>体验：可以创建2个一样名字的实例，比如第一个是instance-1024，第二个会是instance-1024-3132，就是会自动给加参数区分，但是看着名字是一样的。</p>
+<ol start="2">
+<li>比如我第一个账号创建成功了，第二个账号怎么做？</li>
+</ol>
+<p>体验：重新修改oci配置，修改一下<code>oci.sh</code>文件的内容</p>
+<ol start="3">
+<li>甲骨文放货时间？</li>
+</ol>
+<p>体验：体会是北京时间早上7:30-8:00之间</p>
+
+      
+    </div>
+
+    
+
+
+
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机协议/" rel="tag"><i class="fa fa-tag"></i> 计算机协议</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/23/apache-shiro-jia-gou/" rel="next" title="Apache Shiro 架构">
+                <i class="fa fa-chevron-left"></i> Apache Shiro 架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/30/gao-bing-fa-fen-bu-shi-jia-gou-yan-jin-zhi-lu/" rel="prev" title="高并发分布式架构演进之路">
+                高并发分布式架构演进之路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heart.jpg" alt="云逸">
+            
+              <p class="site-author-name" itemprop="name">云逸</p>
+              <p class="site-description motion-element" itemprop="description">记录生活</p>
+          </div>
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/ioufev" title="GitHub &rarr; https://github.com/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/ioufev" title="微博 &rarr; https://weibo.com/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/ioufev" title="知乎 &rarr; https://www.zhihu.com/people/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.douban.com/people/ioufev/" title="豆瓣 &rarr; https://www.douban.com/people/ioufev/" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>豆瓣</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/600a6a230217" title="简书 &rarr; https://www.jianshu.com/u/600a6a230217" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>简书</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/2542962" title="B站 &rarr; https://space.bilibili.com/2542962" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>B站</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#FinalShell"><span class="nav-number">1.</span> <span class="nav-text">FinalShell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装oci-cli"><span class="nav-number">2.</span> <span class="nav-text">安装oci-cli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置oci"><span class="nav-number">3.</span> <span class="nav-text">配置oci</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取请求信息"><span class="nav-number">4.</span> <span class="nav-text">获取请求信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建脚本"><span class="nav-number">5.</span> <span class="nav-text">创建脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时执行脚本"><span class="nav-number">6.</span> <span class="nav-text">定时执行脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问与体验"><span class="nav-number">7.</span> <span class="nav-text">疑问与体验</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云逸</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66163133";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
+

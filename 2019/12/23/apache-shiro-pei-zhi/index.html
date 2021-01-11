@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Apache Shiro 配置">
+<meta name="keywords" content="shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Shiro 配置">
+<meta property="og:url" content="https://ioufev.com/2019/12/23/apache-shiro-pei-zhi/index.html">
+<meta property="og:site_name" content="云逸">
+<meta property="og:description" content="Apache Shiro 配置">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-23T11:43:18.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache Shiro 配置">
+<meta name="twitter:description" content="Apache Shiro 配置">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ioufev.com/2019/12/23/apache-shiro-pei-zhi/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Apache Shiro 配置 | 云逸</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云逸</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ioufev.com/2019/12/23/apache-shiro-pei-zhi/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云逸">
+      <meta itemprop="description" content="记录生活">
+      <meta itemprop="image" content="/images/heart.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云逸">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Apache Shiro 配置
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-23 19:43:18" itemprop="dateCreated datePublished" datetime="2019-12-23T19:43:18+08:00">2019-12-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Apache Shiro 配置</p>
+<a id="more"></a>
+<blockquote>
+<ul>
+<li>原文：<a href="https://shiro.apache.org/configuration.html" target="_blank" rel="noopener">https://shiro.apache.org/configuration.html</a></li>
+<li>译文：<a href="https://www.cnblogs.com/strinkbug/p/6139393.html" target="_blank" rel="noopener">https://www.cnblogs.com/strinkbug/p/6139393.html</a></li>
+</ul>
+</blockquote>
+<p>Shiro设计的初衷就是可以运行于任何环境：无论是简单的命令行应用程序还是复杂的企业集群应用。由于运行环境的多样性，所以有多种配置机制可用于配置，本节我们将介绍Shiro内核支持的这几种配置机制。</p>
+<blockquote>
+<p>许多配置选项</p>
+<p>Shiro的SecurityManager实现和所有支持组件都与JavaBeans兼容。这使Shiro可以使用几乎任何配置格式进行配置，例如常规Java，XML（Spring，JBoss，Guice等），YAML，JSON，Groovy Builder标记等。</p>
+</blockquote>
+<h2 id="程序配置"><a href="#程序配置" class="headerlink" title="程序配置"></a>程序配置</h2><p>最简单的创建并且使用SecurityManager的方式就是直接在代码中创建·org.apache.shiro.mgt.DefaultSecurityManager·类实例，比如：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Realm realm = //instantiate<span class="built_in"> or </span>acquire a Realm instance.  We'll discuss Realms later.</span><br><span class="line">SecurityManager securityManager =<span class="built_in"> new </span>DefaultSecurityManager(realm);</span><br><span class="line"></span><br><span class="line">//Make the SecurityManager<span class="built_in"> instance </span>available to the entire application via<span class="keyword"> static</span> memory: </span><br><span class="line">SecurityUtils.setSecurityManager(securityManager);</span><br></pre></td></tr></table></figure>
+<p>只需区区三行代码，我们就已经为任何类型的应用程序配置好了一个全功能的Shiro运行环境，你看，多简单。</p>
+<h3 id="SecurityManager对象图谱："><a href="#SecurityManager对象图谱：" class="headerlink" title="SecurityManager对象图谱："></a>SecurityManager对象图谱：</h3><p>就像我们在架构一节中介绍的，SecurityManager的实现是模块化的，而且可以兼容JavaBean，所以你可以通过setter和getter方法来配置SecurityManager及其内部组件。</p>
+<p>比如如果你想把一个自定义的SessionDAO配置为SecurityManager的Session管理器，你可以直接调用SessionManager的setSessionDAO方法。</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="type">DefaultSecurityManager</span> securityManager = <span class="function"><span class="keyword">new</span> <span class="title">DefaultSecurityManager</span>(realm);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">SessionDAO</span> <span class="title">sessionDAO</span> = <span class="title">new</span> <span class="title">CustomSessionDAO</span>();</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">((<span class="type">DefaultSessionManager</span>)<span class="title">securityManager</span>.<span class="title">getSessionManager</span>()).<span class="title">setSessionDAO</span>(sessionDAO);</span></span><br><span class="line"><span class="function">...</span></span><br></pre></td></tr></table></figure>
+<p>你可以通过这种调用setter方法的方式来设置SecurityManager的任何内置组件。但是对于现实的应用程序来说，这不是一种理想的配置方式。主要有以下几点原因：</p>
+<ul>
+<li>这种直接编码的方式要求我们知道这个具体的实现类在哪，并且要自己去创建他。而我们一般建议是依赖于抽象而不是具体，所以最好不要让我知道他具体的实现在哪里。</li>
+<li>由于java的类型安全特性，当我们通过getter方法获取到某个类的具体实现之后，我们将不得不把他们强制类型转换为具体的类型，如此多的强制类型转换太丑了，不是一种好的编程实践。</li>
+<li>如果我们通过SecurityUtils.setSecurityManager方法为当前的应用设置一个虚拟机范围内的静态SecurityManager对象，在大多数应用中都是ok的。但是如果我们要在一个虚拟机上运行多个使用Shiro的应用程序时，就可能会出乱子了。所以如果能够为每个应用程序创建一个的单例就更好了；</li>
+<li>每次你要修改一下Shiro的配置都不得不重新编译程序；</li>
+</ul>
+<p>虽然有以上提到的种种缺点，但是如果你要在一个内存受限的环境（比如智能手机）中使用Shiro，使用基于java代码的配置还是不错的选择。而如果内存不太受限的话，使用推荐使用基于文本的配置，因为他对用户更友好，具有更好的可读性。</p>
+<h2 id="INI配置"><a href="#INI配置" class="headerlink" title="INI配置"></a>INI配置</h2><p>为了让这个文本配置方案能够在所有的开发环境中使用，并且尽可能的减少对于第三方工具的依赖，我们选择了INI格式来配置SecurityManager及其相关组件。INI具有易读、易配置的特性，可以适用于绝大多数的应用。</p>
+<h3 id="从INI文件中创建一个SecurityManager"><a href="#从INI文件中创建一个SecurityManager" class="headerlink" title="从INI文件中创建一个SecurityManager"></a>从INI文件中创建一个SecurityManager</h3><p>以下将提供两种基于INI配置文件创建SecurityManager的方法。</p>
+<p><strong>从INI资源文件中创建SecurityManager</strong></p>
+<p>我们可以通过一个INI资源的路径来创建一个SecurityManager，资源可以通过文件系统、classpath、或者url中获取，不同的获取方式需要在资源路径前加不同的前缀，分别是file:, classpath 或者 url:，下面这个例子我们使用一个工厂类从根classpath中找到shiro.ini文件，然后实例化了一个SecurityManager对象。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.SecurityUtils;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.util.Factory;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.mgt.SecurityManager;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.config.IniSecurityManagerFactory;</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Factory&lt;SecurityManager&gt; factory = <span class="keyword">new</span> IniSecurityManagerFactory(<span class="string">"classpath:shiro.ini"</span>);</span><br><span class="line">SecurityManager securityManager = factory.getInstance();</span><br><span class="line">SecurityUtils.setSecurityManager(securityManager);</span><br></pre></td></tr></table></figure>
+<p><strong>从INI类实例中创建SecurityManager</strong></p>
+<p>如果有需要，我们也可以通过<code>org.apache.shiro.config.Ini</code>类来做INI配置，这个Ini类的API和java.util.Properties类比较像，只是在接口中需要传入Section的名称。</p>
+<p>例如：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.SecurityUtils;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.util.Factory;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.mgt.SecurityManager;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.config.Ini;</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">import</span> org.apache.shiro.config.IniSecurityManagerFactory;</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Ini ini = <span class="keyword">new</span> Ini();</span><br><span class="line"><span class="comment">//populate the Ini instance as necessary</span></span><br><span class="line">...</span><br><span class="line">Factory&lt;SecurityManager&gt; factory = <span class="keyword">new</span> IniSecurityManagerFactory(ini);</span><br><span class="line">SecurityManager securityManager = factory.getInstance();</span><br><span class="line">SecurityUtils.setSecurityManager(securityManager);</span><br></pre></td></tr></table></figure>
+<p>以上我们已经知道如何通过INI配置来实例化SecurityManager对象，下面就让我们来看看一个真实的Shiro的配置文件到底长什么样。</p>
+<h3 id="INI-Secions"><a href="#INI-Secions" class="headerlink" title="INI Secions"></a>INI Secions</h3><p>所谓的INI文件其实就是按Section分隔的键值对的集合，不同的Section名称不同，每个Section内的键名称要有唯一性。每个Section可以看做就是一个Properties。</p>
+<p>注释行可以井号（#） 开头，也可以 分号（;）开头。</p>
+<p>下面就是一个Shiro能够解析的INI文件的例子，他的这些Section名称是Shiro所支持的。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment"># Shiro INI configuration</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"></span><br><span class="line"><span class="section">[main]</span></span><br><span class="line"><span class="comment"># Objects and their properties are defined here,</span></span><br><span class="line"><span class="comment"># Such as the securityManager, Realms and anything</span></span><br><span class="line"><span class="comment"># else needed to build the SecurityManager</span></span><br><span class="line"></span><br><span class="line"><span class="section">[users]</span></span><br><span class="line"><span class="comment"># The 'users' section is for simple deployments</span></span><br><span class="line"><span class="comment"># when you only need a small number of statically-defined</span></span><br><span class="line"><span class="comment"># set of User accounts.</span></span><br><span class="line"></span><br><span class="line"><span class="section">[roles]</span></span><br><span class="line"><span class="comment"># The 'roles' section is for simple deployments</span></span><br><span class="line"><span class="comment"># when you only need a small number of statically-defined</span></span><br><span class="line"><span class="comment"># roles.</span></span><br><span class="line"></span><br><span class="line"><span class="section">[urls]</span></span><br><span class="line"><span class="comment"># The 'urls' section is used for url-based security</span></span><br><span class="line"><span class="comment"># in web applications.  We'll discuss this section in the</span></span><br><span class="line"><span class="comment"># Web documentation</span></span><br></pre></td></tr></table></figure>
+<h3 id="main"><a href="#main" class="headerlink" title="[main]"></a>[main]</h3><p>[main]段主要用于配置SecurityManager及其他的依赖项，比如Realms。<br>要使用INI这种简单键值对文件格式来配置SecurityManager对象及其依赖项这种层级关系感觉难度有点大，只要稍微加上一些约定，你会发现INI文件能做的远比我们想象的要多，我们把这种基于INI的配置叫做“穷人”的依赖注入。虽然没有Spring/JBoss之类的高富帅那么强大，但是已经足够满足Shiro的配置要求了。下面是一个[main]段的配置例子，我们会在下文详细解释，不过我估计在解释之前，你也能猜个八九不离十了。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[main]</span><br><span class="line">sha256Matcher = org<span class="selector-class">.apache</span><span class="selector-class">.shiro</span><span class="selector-class">.authc</span><span class="selector-class">.credential</span><span class="selector-class">.Sha256CredentialsMatcher</span></span><br><span class="line"></span><br><span class="line">myRealm = com<span class="selector-class">.company</span><span class="selector-class">.security</span><span class="selector-class">.shiro</span><span class="selector-class">.DatabaseRealm</span></span><br><span class="line">myRealm<span class="selector-class">.connectionTimeout</span> = <span class="number">30000</span></span><br><span class="line">myRealm<span class="selector-class">.username</span> = jsmith</span><br><span class="line">myRealm<span class="selector-class">.password</span> = secret</span><br><span class="line">myRealm<span class="selector-class">.credentialsMatcher</span> = <span class="variable">$sha256Matcher</span></span><br><span class="line"></span><br><span class="line">securityManager<span class="selector-class">.sessionManager</span><span class="selector-class">.globalSessionTimeout</span> = <span class="number">1800000</span></span><br></pre></td></tr></table></figure>
+<p>定义一个对象</p>
+<p>看下面这段[main]配置片段。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[main]</span><br><span class="line">myRealm = com<span class="selector-class">.company</span><span class="selector-class">.shiro</span><span class="selector-class">.realm</span><span class="selector-class">.MyRealm</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这段配置创建了类 <code>com.company.shiro.realm.MyRealm</code>的一个实例，命名为myRealm。如果这个类实现了org.apache.shiro.util.Nameable接口，则程序会使用参数”myRealm”来调用Nameable.setName接口。</p>
+<p>设置对象属性</p>
+<p>基本类型</p>
+<p>基本类型属性可以像下面这样直接赋值</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">myRealm<span class="selector-class">.connectionTimeout</span> = <span class="number">30000</span></span><br><span class="line">myRealm<span class="selector-class">.username</span> = jsmith</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这段配置翻译成Java代码后是这样的：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line">myRealm.<span class="keyword">set</span>ConnectionTimeout<span class="params">(30000)</span>;</span><br><span class="line">myRealm.<span class="keyword">set</span>Username<span class="params">("jsmith")</span>;</span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>这是如何做到的呢？ 这里假定所有的对象都是和Java Bean兼容的POJO对象。·</p>
+<p>在这种约定的前提下，当给对象设置属性时，Shiro会将所有的脏活、累活都交给Apache Common BeanUtils来干，虽然我们在INI文件内配置的是文本，但是BeanUtils知道如何将一个字符串的值转换为基本类型，并且调用该对象的对应的setter方法来给该POJO设置属性。</p>
+<p><strong>引用类型</strong></p>
+<p>如果要设置是引用类型怎么办？你可以用一个美元符号（$）来引用前文中定义的对象，像下面这样，就这么简单。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">sha256Matcher = org<span class="selector-class">.apache</span><span class="selector-class">.shiro</span><span class="selector-class">.authc</span><span class="selector-class">.credential</span><span class="selector-class">.Sha256CredentialsMatcher</span></span><br><span class="line">...</span><br><span class="line">myRealm<span class="selector-class">.credentialsMatcher</span> = <span class="variable">$sha256Matcher</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这只是找到名称为sha256Matcher定义的对象，然后使用BeanUtils在myRealm实例上设置该对象（通过调用<code>myRealm.setCredentialsMatcher(sha256Matcher)</code>方法）。</p>
+<p><strong>嵌套属性</strong></p>
+<p>你可以像下面这样引用嵌套属性，给属性赋值，不管有多少个层级，都可以这么用。</p>
+<p>使用INI线的等号左侧的虚线表示法，可以遍历对象图以到达要设置的最终对象/属性。例如，此配置行：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">securityManager<span class="selector-class">.sessionManager</span><span class="selector-class">.globalSessionTimeout</span> = <span class="number">1800000</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>BeanUtils会把他翻译成下面这样的代码：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">securityManager</span><span class="selector-class">.getSessionManager</span>()<span class="selector-class">.setGlobalSessionTimeout</span>(1800000);</span><br></pre></td></tr></table></figure>
+<p>这种嵌套的层级可以要多深有多深，比如：<code>object.property1.property2.....propertyN.value=blah</code></p>
+<blockquote>
+<p>BeanUtil支持的属性设置</p>
+<p>只要是BeanUtil支持的属性设置方式你都可以在Shiro配置文件的[main] Section中配置。包括对于set/list/map属性的设置。详情可以参考  Apache Commons BeanUtils Website官方文档。</p>
+</blockquote>
+<p><strong>字节数组</strong></p>
+<p>因为在文本文件中无法直接表示二进制树，所以必须使用一种可以使用文本编码的方式来表示二进制数组，有两种选择，一种是：BASE64，一种是十六进制字符串。默认使用BASE64编码，因为表示相同长度的二进制，BASE64需要的字节更少。这显然更合适文本配置。</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># The <span class="symbol">'cipherKey</span>' <span class="keyword">attribute</span> <span class="keyword">is</span> a byte <span class="keyword">array</span>.    By <span class="keyword">default</span>, <span class="literal">text</span> values</span><br><span class="line"># <span class="keyword">for</span> <span class="keyword">all</span> byte <span class="keyword">array</span> properties are expected <span class="keyword">to</span> be Base64 encoded:</span><br><span class="line"></span><br><span class="line">securityManager.rememberMeManager.cipherKey = kPH+bIxk5D2deZiIxcaaaA==</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>十六进制的文本当然也是可以的，你要记得在文本的前面加上<code>0x</code>。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">securityManager<span class="selector-class">.rememberMeManager</span><span class="selector-class">.cipherKey</span> = <span class="number">0</span>x3707344A4093822299F31D008</span><br></pre></td></tr></table></figure>
+<p><strong>集合属性</strong></p>
+<p>我们可以像设置其他属性一样去设置list、set、map类型的属性，不管是直接的属性还是嵌套属性。对于list和set，我们可以直接使用逗号分隔的值（或者引用）来设置，例如：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sessionListener1 = com<span class="selector-class">.company</span><span class="selector-class">.my</span><span class="selector-class">.SessionListenerImplementation</span></span><br><span class="line">...</span><br><span class="line">sessionListener2 = com<span class="selector-class">.company</span><span class="selector-class">.my</span><span class="selector-class">.other</span><span class="selector-class">.SessionListenerImplementation</span></span><br><span class="line">...</span><br><span class="line">securityManager<span class="selector-class">.sessionManager</span><span class="selector-class">.sessionListeners</span> = <span class="variable">$sessionListener1</span>, <span class="variable">$sessionListener2</span></span><br></pre></td></tr></table></figure>
+<p>对于map，你可以指定一系列都好分隔的键值对。键值对内部使用 冒号来作为键和值的分隔符，例如：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">object1 = com<span class="selector-class">.company</span><span class="selector-class">.some</span><span class="selector-class">.Class</span></span><br><span class="line">object2 = com<span class="selector-class">.company</span><span class="selector-class">.another</span><span class="selector-class">.Class</span></span><br><span class="line">...</span><br><span class="line">anObject = some<span class="selector-class">.class</span><span class="selector-class">.with</span><span class="selector-class">.a</span><span class="selector-class">.Map</span><span class="selector-class">.property</span></span><br><span class="line"></span><br><span class="line">anObject<span class="selector-class">.mapProperty</span> = key1:<span class="variable">$object1</span>, key2:<span class="variable">$object2</span></span><br></pre></td></tr></table></figure>
+<p>你还可以直接使用对象来作为key，如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anObject<span class="selector-class">.map</span> = <span class="variable">$objectKey1</span>:<span class="variable">$objectValue1</span>, <span class="variable">$objectKey2</span>:<span class="variable">$objectValue2</span></span><br></pre></td></tr></table></figure>
+<p>注意事项</p>
+<p>订单事项</p>
+<p>上面的INI格式和约定非常方便且易于理解，但是不如其他基于文本/ XML的配置机制强大。使用上述机制时，最重要的要了解的是订单事项！</p>
+<blockquote>
+<p>顺序问题</p>
+<p>在INI文件中配置的顺序决定了他们翻译成Java代码之后的顺序，这块要小心。</p>
+</blockquote>
+<p><strong>重写实例</strong></p>
+<p>后定义的同名对象会覆盖之前定义的对象，如下第二个myRealm会覆盖掉第一个myRealm的定义，所以最终<code>myRealm</code>是<code>com.company.security.DatabaseRealm</code>的对象实例，而前一个定义的realm将永远不会被引用了。（自然也就被垃圾回收了）。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">myRealm = com<span class="selector-class">.company</span><span class="selector-class">.security</span><span class="selector-class">.MyRealm</span></span><br><span class="line">...</span><br><span class="line">myRealm = com<span class="selector-class">.company</span><span class="selector-class">.security</span><span class="selector-class">.DatabaseRealm</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>默认的SecurityManager</strong></p>
+<p>你可能已经注意到，在上文的配置中，我们并没有创建SecurityManager对象就直接去设置他的嵌套属性了。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myRealm = ...</span><br><span class="line"></span><br><span class="line">securityManager<span class="selector-class">.sessionManager</span><span class="selector-class">.globalSessionTimeout</span> = <span class="number">1800000</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>SecurityManager是特例，系统已经自动为你创建好了一个SecurityManager对象，你就只管用就好了。当然，如果你说我一定要使用字节实现的一个SecurityManager，那也不是不行，直接像下面这么写就可以了，就像 重写实例 章节中说的，这样就会覆盖掉系统自动创建的SecurityManager对象了。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">securityManager = com<span class="selector-class">.company</span><span class="selector-class">.security</span><span class="selector-class">.shiro</span><span class="selector-class">.MyCustomSecurityManager</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>当然，这种情况很少发生。因为Shiro默认提供的SecurityManager具有很好的定制性，你几乎可以为配置任何属性。所以如果你发现自己要写一个自定义的SecurityManager的时候，不妨先问问自己：这真的有必要吗？</p>
+<h3 id="users"><a href="#users" class="headerlink" title="[users]"></a>[users]</h3><p>[users]Setion允许你定义一组用户账号。在那些只需要很少的用户账号，或者是那些不需要在运行时动态创建用户账号的运行环境下，这个功能很实用。你可以像下面这么写。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[users]</span><br><span class="line">admin = secret</span><br><span class="line">lonestarr = vespa, goodguy, schwartz</span><br><span class="line">darkhelmet = ludicrousspeed, badguy, schwartz</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>自动生成的IniRealm</p>
+<p>一旦Shiro发现INI文件的[users], [roles]章节不为空，他就会自动创建一个org.apache.shiro.realm.text.IniRealm类的实例并命名为iniRealm，所以你可以在[main]章节中像配置其他对象一样给iniRealm配置属性。</p>
+</blockquote>
+<p><strong>行格式</strong></p>
+<p>在[users]的每一行将定义成如下格式</p>
+<p>username=password, roleName1, roleName2, …, roleNameN</p>
+<ul>
+<li>左边的key是用户名；</li>
+<li>右边是逗号分隔的密码和角色，其中第一个而是密码，后续的是角色名，角色可以有多个；</li>
+<li>角色是可选的；</li>
+</ul>
+<p><strong>密码加密</strong></p>
+<p>如果你不想让密码直接用明文显示，也可以使用任何你喜欢的加密算法（MD5,Sha1,Sha256, 等等）来对密码做加密，然后把加密之后的文本复制到INI文件中。加密之后的密码默认应该以十六进制的文本，当然也可以是BASE64的，具体看下问的说明。</p>
+<blockquote>
+<p>简单安全的密码</p>
+<p>对密码做加密的最佳实践是使用Shiro提供的  Command Line Hasher工具，他会对密码或者其他你想要加密的文本做哈希，这个工具对于要放在Shiro的INI配置文件的[users]中显示的密码最为实用。</p>
+</blockquote>
+<p> 如果你对密码做了加密，那么你就要告诉Shiro你对密码做了加密，不然他就不认识了。你可以在[main]端中配置Shiro隐式生成的iniRealm类，把你加密密密时使用的加密算法指定给<code>credentialsMatcher</code>属性即可。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[main]</span><br><span class="line">...</span><br><span class="line">sha256Matcher = org.apache.shiro.authc.credential.<span class="symbol">Sha256CredentialsMatcher</span></span><br><span class="line">...</span><br><span class="line">iniRealm.credentialsMatcher = $sha256Matcher</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">[users]</span><br><span class="line"># user1 = sha256-hashed-hex-encoded password, role1, role2, ...</span><br><span class="line">user1 = <span class="number">2</span>bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b, role1, role2, ...</span><br></pre></td></tr></table></figure>
+<p>和其他属性一样，你可以给CredentialMatcher配置任何值来体现你的哈希策略，比如指定一个盐值，或者是哈希迭代的次数。要想更好的了解哈希策略，你可以查看<code>org.apache.shiro.authc.credential.HashedCredentialsMatcher</code>的API文档。</p>
+<p>比如，如果用户的密码是BASE64编码，而不是默认的16进制，则应该像下面这么配置。</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[main]</span><br><span class="line">...</span><br><span class="line"># <span class="literal">true</span> = hex, <span class="literal">false</span> = base64:</span><br><span class="line">sha256Matcher.storedCredentialsHexEncoded = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="roles"><a href="#roles" class="headerlink" title="[roles]"></a>[roles]</h3><p>这个session用于定义角色与权限的对照关系，同样的，这种配置方式对于那些只有少数几种角色，并且不需要在运行时动态创建角色的应用程序特别实用。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[roles]</span><br><span class="line"># <span class="symbol">'admi</span>n' role has all permissions, indicated by the wildcard '*'</span><br><span class="line">admin = *</span><br><span class="line"># <span class="type">The</span> <span class="symbol">'schwart</span>z' role can do anything (*) <span class="keyword">with</span> any lightsaber:</span><br><span class="line">schwartz = lightsaber:*</span><br><span class="line"># <span class="type">The</span> <span class="symbol">'goodgu</span>y' role is allowed to <span class="symbol">'driv</span>e' (action) the winnebago (<span class="class"><span class="keyword">type</span>) <span class="keyword">with</span></span></span><br><span class="line"><span class="class"><span class="title">#</span> <span class="title">license</span> <span class="title">plate</span> '<span class="title">eagle5</span>' (<span class="params">instance specific id</span>)</span></span><br><span class="line"><span class="class"><span class="title">goodguy</span> </span>= winnebago:drive:eagle5</span><br></pre></td></tr></table></figure>
+<p><strong>行格式</strong></p>
+<p>在[roles]中的每一行都必须定义为角色与权限的键值对关系，格式如下：</p>
+<p>rolename=permissionDefinition1,permissionDefinition2,…, permissionDefinitionN</p>
+<p>此处permissionDefinition 可以是任意文本，不过一般我们会建议使用和<code>org.apache.shiro.authz.permission.WildcardPermission</code>格式兼容的文本格式，这种格式简单而又灵活。可以查看权限（ Permissions）章节来了解更多关于这种权限格式的信息。</p>
+<h3 id="urls"><a href="#urls" class="headerlink" title="[urls]"></a>[urls]</h3><p>这个Section的描述将放在 Web 章节。</p>
+
+      
+    </div>
+
+    
+
+
+
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shiro/" rel="tag"><i class="fa fa-tag"></i> shiro</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/23/apache-shiro-jian-jie/" rel="next" title="Apache Shiro 简介">
+                <i class="fa fa-chevron-left"></i> Apache Shiro 简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/23/apache-shiro-zhu-yu/" rel="prev" title="Apache Shiro 术语">
+                Apache Shiro 术语 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/heart.jpg" alt="云逸">
+            
+              <p class="site-author-name" itemprop="name">云逸</p>
+              <p class="site-description motion-element" itemprop="description">记录生活</p>
+          </div>
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/ioufev" title="GitHub &rarr; https://github.com/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/ioufev" title="微博 &rarr; https://weibo.com/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/ioufev" title="知乎 &rarr; https://www.zhihu.com/people/ioufev" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.douban.com/people/ioufev/" title="豆瓣 &rarr; https://www.douban.com/people/ioufev/" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>豆瓣</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/600a6a230217" title="简书 &rarr; https://www.jianshu.com/u/600a6a230217" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>简书</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://space.bilibili.com/2542962" title="B站 &rarr; https://space.bilibili.com/2542962" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>B站</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序配置"><span class="nav-number">1.</span> <span class="nav-text">程序配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SecurityManager对象图谱："><span class="nav-number">1.1.</span> <span class="nav-text">SecurityManager对象图谱：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INI配置"><span class="nav-number">2.</span> <span class="nav-text">INI配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从INI文件中创建一个SecurityManager"><span class="nav-number">2.1.</span> <span class="nav-text">从INI文件中创建一个SecurityManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INI-Secions"><span class="nav-number">2.2.</span> <span class="nav-text">INI Secions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">2.3.</span> <span class="nav-text">[main]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#users"><span class="nav-number">2.4.</span> <span class="nav-text">[users]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roles"><span class="nav-number">2.5.</span> <span class="nav-text">[roles]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#urls"><span class="nav-number">2.6.</span> <span class="nav-text">[urls]</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云逸</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66163133";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdn.staticfile.org/velocity/1.2.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
+
